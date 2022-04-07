@@ -42,8 +42,8 @@ public class CustomerController {
 		return response;
 	}
 	
-	@DeleteMapping("/delete")
-	public ResponseEntity<Void> delete(@RequestParam Customer customer) {
+	@DeleteMapping
+	public ResponseEntity<Void> delete(@RequestBody Customer customer) {
 		customerService.delete(customer);
 		return ResponseEntity.noContent().build();
 	}	

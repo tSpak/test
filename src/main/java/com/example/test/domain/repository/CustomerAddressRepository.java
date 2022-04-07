@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.test.domain.model.Address;
 import com.example.test.domain.model.CustomerAddress;
@@ -21,8 +22,14 @@ public interface CustomerAddressRepository extends JpaRepository<CustomerAddress
 	CustomerAddress getByCustomerIdAndAddressId(@Param("costumerId")Integer customerId, @Param("addressId") Integer addressId);
 
 	@Modifying
+	@Transactional
 	@Query(value = " delete from CustomerAddress where costumerId = :costumerId and address = :address ")
 	void remove(@Param("costumerId") Integer costumerId, @Param("address") Address address);
+	
+	@Modifying
+	@Transactional
+	@Query(value = " delete from CustomerAddress where costumerId = :costumerId ")
+	void removeByCustomer(@Param("costumerId") Integer costumerId);
 	
 	
 }

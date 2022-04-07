@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.test.domain.model.Customer;
+import com.example.test.domain.repository.CustomerAddressRepository;
 import com.example.test.domain.repository.CustomerRepository;
 
 @Service
@@ -18,6 +20,8 @@ public class CustomerService {
 	@Autowired
 	CustomerRepository customerRepository;
 	
+	@Autowired
+	CustomerAddressRepository customerAddressRepository;
 	
 	public ResponseEntity<Serializable> save(Customer customer) {
 		String validationResult = validate(customer);
@@ -47,8 +51,9 @@ public class CustomerService {
 		return result;
 	}
 	
-	
+	@Transactional
 	public void delete(Customer customer) {
+		customerAddressRepository.removeByCustomer(customer.getCustomerId());
 		customerRepository.delete(customer);
 	}
 
