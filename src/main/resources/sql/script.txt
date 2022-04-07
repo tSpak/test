@@ -1,0 +1,22 @@
+create table customer(
+	customer_id serial  not null PRIMARY KEY,
+	document_id VARCHAR(20) not null unique,
+	name VARCHAR(50) not null,
+	age integer,
+	created_date "timestamp" not null,
+	updated_date "timestamp"	
+);
+
+create table address(
+	address_id serial not null PRIMARY KEY,
+	zip_code VARCHAR(9) not null,
+	number integer
+);
+
+create table customer_address(
+	customer_address_id serial not null PRIMARY KEY,
+	customer_id integer not null,
+	address_id integer not null,
+	FOREIGN KEY (customer_id) REFERENCES customer (customer_id),
+	FOREIGN KEY (address_id) REFERENCES address (address_id)
+);
